@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using TaskOrderManagement.Application.DTOs;
 using TaskOrderManagement.Application.Interfaces;
 using TaskOrderManagement.Domain.Entities;
 using TaskOrderManagement.Domain.Enum;
@@ -17,18 +18,26 @@ namespace TaskOrderManagement.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create()
+        public async Task<IActionResult> Create(CreateUserRequestDto dto)
         {
             var user = new User
             {
-                FullName = "Test User",
-                Email = "test@example.com",
-                PasswordHash = "hashed-password",
-                Role = UserRole.User
+                FullName = dto.FullName,
+                Email = dto.Email,
+                PasswordHash = dto.Password, // hashing DAY 6
+                Role = dto.Role
             };
 
-            var result = await _userService.CreateUserAsync(user);
-            return Ok(result);
+            var created = await _userService.CreateUserAsync(user);
+
+            var response = new UserResponseDto
+            {
+                Id = created.Id,
+                FullName = created.FullName,
+                Email = created.Email
+            };
+
+            return CreatedAtAction(nameof(Create), response);
         }
     }
 }

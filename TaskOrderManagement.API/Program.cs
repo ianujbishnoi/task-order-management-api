@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
-using TaskOrderManagement.Infrastructure.Data;
+using TaskOrderManagement.API.Filters;
 using TaskOrderManagement.Application.Interfaces;
+using TaskOrderManagement.Infrastructure.Data;
 using TaskOrderManagement.Infrastructure.Services;
 //AppDomain.CurrentDomain.FirstChanceException += (sender, eventArgs) =>
 //{
@@ -21,6 +22,11 @@ builder.Services.AddScoped<ITaskService, TaskService>();
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+builder.Services.AddControllers(options =>
+{
+    options.Filters.Add<ValidationFilter>();
+});
 
 var app = builder.Build();
 

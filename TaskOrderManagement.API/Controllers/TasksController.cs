@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using TaskOrderManagement.Application.DTOs;
 using TaskOrderManagement.Application.Interfaces;
 
 namespace TaskOrderManagement.API.Controllers
@@ -17,6 +18,13 @@ namespace TaskOrderManagement.API.Controllers
         {
             var tasks = await _taskService.GetTasksByUserAsync(userId);
             return Ok(tasks);
+        }
+
+        [HttpGet("paged")]
+        public async Task<IActionResult> GetPaged([FromQuery] PagedRequestDto request)
+        {
+            var result = await _taskService.GetPagedTasksAsync(request);
+            return Ok(result);
         }
     }
 }

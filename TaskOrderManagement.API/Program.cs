@@ -1,12 +1,13 @@
-using Microsoft.EntityFrameworkCore;
-using TaskOrderManagement.API.Filters;
-using TaskOrderManagement.Application.Interfaces;
-using TaskOrderManagement.Infrastructure.Data;
-using TaskOrderManagement.Infrastructure.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using TaskOrderManagement.API.Filters;
+using TaskOrderManagement.API.Middleware;
+using TaskOrderManagement.Application.Interfaces;
+using TaskOrderManagement.Infrastructure.Data;
 using TaskOrderManagement.Infrastructure.Security;
+using TaskOrderManagement.Infrastructure.Services;
 //AppDomain.CurrentDomain.FirstChanceException += (sender, eventArgs) =>
 //{
 //    Console.WriteLine(eventArgs.Exception.ToString());
@@ -60,6 +61,10 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseMiddleware<ExceptionHandlingMiddleware>();
+app.UseMiddleware<RequestLoggingMiddleware>();
+
 app.UseAuthentication();
 app.UseAuthorization();
 

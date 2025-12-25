@@ -3,6 +3,8 @@ using TaskOrderManagement.Application.DTOs;
 using TaskOrderManagement.Application.Interfaces;
 using TaskOrderManagement.Domain.Entities;
 using TaskOrderManagement.Domain.Enum;
+using TaskOrderManagement.Infrastructure.Security;
+
 
 namespace TaskOrderManagement.API.Controllers
 {
@@ -24,7 +26,7 @@ namespace TaskOrderManagement.API.Controllers
             {
                 FullName = dto.FullName,
                 Email = dto.Email,
-                PasswordHash = dto.Password, // hashing DAY 6
+                PasswordHash = PasswordHasher.Hash(dto.Password), // hashing DAY 6
                 Role = dto.Role
             };
 

@@ -8,6 +8,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using TaskOrderManagement.Domain.Entities;
+using TaskOrderManagement.Domain.Enum;
 
 namespace TaskOrderManagement.Infrastructure.Security
 {
@@ -26,7 +27,10 @@ namespace TaskOrderManagement.Infrastructure.Security
             {
             new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
             new Claim(ClaimTypes.Role, user.Role.ToString()),
-            new Claim(JwtRegisteredClaimNames.Email, user.Email)
+            new Claim(JwtRegisteredClaimNames.Email, user.Email),
+
+            new Claim("CanCreateTask", user.Role == UserRole.Admin ? "true" : "false"),
+            new Claim("Department", "IT")
         };
 
             var key = new SymmetricSecurityKey(

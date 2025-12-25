@@ -30,6 +30,12 @@ public class ApplicationDbContext : DbContext
             .HasForeignKey(t => t.AssignedUserId)
             .OnDelete(DeleteBehavior.Restrict);
 
+        modelBuilder.Entity<TaskItem>()
+            .HasIndex(t => t.CreatedAt);
+
+        modelBuilder.Entity<TaskItem>()
+            .HasIndex(t => t.Title);
+
         // User → Orders (1 to many)
         modelBuilder.Entity<Order>()
             .HasOne(o => o.User)

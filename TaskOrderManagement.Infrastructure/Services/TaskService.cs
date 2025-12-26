@@ -20,10 +20,19 @@ namespace TaskOrderManagement.Infrastructure.Services
             _context = context;
         }
 
-        public async Task<TaskItem> CreateTaskAsync(TaskItem task)
+        public async Task<TaskItem> CreateTaskAsync(CreateTaskRequestDto dto)
         {
+            var task = new TaskItem
+            {
+                Title = dto.Title,
+                Description = dto.Description,
+                AssignedUserId = dto.AssignedUserId,
+                IsCompleted = false
+            };
+
             _context.Tasks.Add(task);
             await _context.SaveChangesAsync();
+
             return task;
         }
 

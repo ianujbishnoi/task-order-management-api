@@ -5,6 +5,7 @@ using System.Text;
 using TaskOrderManagement.API.Filters;
 using TaskOrderManagement.API.Middleware;
 using TaskOrderManagement.Application.Interfaces;
+using TaskOrderManagement.Infrastructure.BackgroundJobs;
 using TaskOrderManagement.Infrastructure.Data;
 using TaskOrderManagement.Infrastructure.Security;
 using TaskOrderManagement.Infrastructure.Services;
@@ -34,7 +35,7 @@ builder.Services.AddControllers(options =>
 });
 
 builder.Services.AddScoped<JwtTokenGenerator>();
-
+builder.Services.AddHostedService<TaskExpirationService>();
 builder.Services.AddSwaggerGen(options =>
 {
     options.AddSecurityDefinition("Bearer", new Microsoft.OpenApi.Models.OpenApiSecurityScheme

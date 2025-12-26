@@ -33,9 +33,10 @@ namespace TaskOrderManagement.API.Controllers
 
         [Authorize(Policy = "CanCreateTaskPolicy")]
         [HttpPost]
-        public async Task<IActionResult> CreateTask()
+        public async Task<IActionResult> CreateTask([FromBody] CreateTaskRequestDto dto)
         {
-            return Ok("Task created (policy-based access)");
+            var task = await _taskService.CreateTaskAsync(dto);
+            return Ok(task);
         }
 
         [Authorize(Policy = "ITDepartmentOnly")]

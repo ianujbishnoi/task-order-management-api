@@ -1,19 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TaskOrderManagement.Domain.Common;
 
-namespace TaskOrderManagement.Domain.Entities
+namespace TaskOrderManagement.Application.DTOs
 {
-    public class TaskItem : BaseEntity
+    public class CreateTaskRequestDto
     {
+        [Required]
+        [MaxLength(200)]
         public string Title { get; set; } = null!;
+
         public string? Description { get; set; }
-        public bool IsCompleted { get; set; }
-        public bool IsExpired { get; set; }
+
+        [Required]
         public int AssignedUserId { get; set; }
-        public User AssignedUser { get; set; } = null!;
     }
 }

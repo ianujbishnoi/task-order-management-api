@@ -10,7 +10,7 @@ namespace TaskOrderManagement.Application.Interfaces
 {
     public interface ITaskService
     {
-        Task<TaskItem> CreateTaskAsync(TaskItem task);
+        Task<TaskItem> CreateTaskAsync(CreateTaskRequestDto dto);
         Task<List<TaskItem>> GetTasksByUserAsync(int userId);
         Task<PagedResponseDto<TaskItem>> GetPagedTasksAsync(PagedRequestDto request);
     }
